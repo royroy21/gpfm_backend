@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'djoser',
     'corsheaders',
+
+    # local apps
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -136,3 +139,6 @@ REST_FRAMEWORK = {
 CORS_ORIGIN_WHITELIST = (
     "http://localhost:3000",
 )
+
+AUTH_USER_MODEL = 'users.User'
+LOGIN_FIELD = 'email'
