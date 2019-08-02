@@ -142,3 +142,10 @@ CORS_ORIGIN_WHITELIST = (
 
 AUTH_USER_MODEL = 'users.User'
 LOGIN_FIELD = 'email'
+
+DJOSER = {
+    'SERIALIZERS': {
+        'token_create':
+            'api.auth.serializers.token.CustomTokenCreateSerializer',
+    },
+}
