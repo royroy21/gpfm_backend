@@ -7,13 +7,17 @@ services:
       - data-volume:/var/lib/db
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    # TODO - having to disable reload to use ipdb. Must fix
+    #command: python3 manage.py runserver 0.0.0.0:8000 --noreload
+    command: python3 manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/code
     ports:
       - "8000:8000"
     depends_on:
       - db
+    stdin_open: true
+    tty: true
 
 volumes:
   data-volume:

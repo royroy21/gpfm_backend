@@ -56,7 +56,7 @@ class User(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
         unique=True,
         validators=[email_validator],
         error_messages={
-            'unique': _("A user with that email address already exists."),
+            'unique': _("A users with that email address already exists."),
         },
     )
     is_staff = models.BooleanField(default=False)

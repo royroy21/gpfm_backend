@@ -18,14 +18,14 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('password', models.CharField(max_length=128, verbose_name='password')),
-                ('email', models.CharField(error_messages={'unique': 'A user with that email address already exists.'}, max_length=254, unique=True, validators=[users.validators.EmailValidator()], verbose_name='email')),
+                ('email', models.CharField(error_messages={'unique': 'A users with that email address already exists.'}, max_length=254, unique=True, validators=[users.validators.EmailValidator()], verbose_name='email')),
                 ('is_staff', models.BooleanField(default=False)),
                 ('is_superuser', models.BooleanField(default=False)),
                 ('is_active', models.BooleanField(default=True)),
                 ('last_login', models.DateTimeField(blank=True, null=True)),
                 ('date_joined', models.DateTimeField(auto_now_add=True)),
-                ('groups', models.ManyToManyField(blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.', related_name='user_set', related_query_name='user', to='auth.Group', verbose_name='groups')),
-                ('user_permissions', models.ManyToManyField(blank=True, help_text='Specific permissions for this user.', related_name='user_set', related_query_name='user', to='auth.Permission', verbose_name='user permissions')),
+                ('groups', models.ManyToManyField(blank=True, help_text='The groups this users belongs to. A users will get all permissions granted to each of their groups.', related_name='user_set', related_query_name='users', to='auth.Group', verbose_name='groups')),
+                ('user_permissions', models.ManyToManyField(blank=True, help_text='Specific permissions for this users.', related_name='user_set', related_query_name='users', to='auth.Permission', verbose_name='users permissions')),
             ],
             options={
                 'abstract': False,
