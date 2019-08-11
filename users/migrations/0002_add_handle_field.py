@@ -14,8 +14,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='user',
             name='handle',
-            field=models.CharField(default='cats', error_messages={'unique': 'User with that handle already exists.'}, max_length=254, verbose_name='handle'),
-            preserve_default=False,
+            field=models.CharField(error_messages={'unique': 'User with that handle already exists.'}, max_length=254, unique=True, verbose_name='handle'),
         ),
         migrations.AlterField(
             model_name='user',
