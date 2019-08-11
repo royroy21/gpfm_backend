@@ -6,17 +6,15 @@ from rest_framework.validators import ValidationError
 class TokenCreateSerializer(DjoserTokenCreateSerializer):
 
     def validate(self, attrs):
-        return super().validate(self.get_attrs_with_lowercase_email(attrs))
-
-    def get_attrs_with_lowercase_email(self, attrs):
         email = attrs.get("email")
 
         if isinstance(email, str):
             email = email.lower()
-        return {
+
+        return super().validate({
             **attrs,
             "email": email,
-        }
+        })
 
     def create(self, validated_data):
         raise ValidationError("Create method disabled.")

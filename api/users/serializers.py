@@ -10,8 +10,16 @@ from rest_framework.serializers import CharField
 User = get_user_model()
 
 
-class UserSerializer(DjoserUserSerializer):
-    pass
+class CurrentUserSerializer(DjoserUserSerializer):
+
+    class Meta:
+        model = User
+        fields = tuple(User.REQUIRED_FIELDS) + (
+            settings.LOGIN_FIELD,
+            "handle",
+            "id",
+        )
+        read_only_fields = (settings.LOGIN_FIELD,)
 
 
 class CreatePasswordRetypeSerializer(DjoserUserCreateSerializer):
@@ -31,12 +39,13 @@ class CreatePasswordRetypeSerializer(DjoserUserCreateSerializer):
             settings.LOGIN_FIELD,
             "password",
             "re_password",
+            "handle",
         )
 
     def validate(self, attrs):
         re_password = attrs.pop('re_password')
         attrs = super().validate(attrs)
-        if attrs['password'] == re_password:
-            return attrs
-        else:
+        if attrs['password'] != re_password:
             self.fail('password_mismatch')
+        return attrs
+
