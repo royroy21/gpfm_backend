@@ -6,7 +6,14 @@ from users.models import User
 
 class UserAdmin(BaseUserAdmin):
     fieldsets = (
-        (None, {'fields': ('email', 'handle', 'password', 'last_login')}),
+        (None, {'fields': (
+            'email',
+            'handle',
+            'bio',
+            'avatar',
+            'password',
+            'last_login',
+        )}),
         ('Permissions', {'fields': (
             'is_active',
             'is_staff',
@@ -16,20 +23,44 @@ class UserAdmin(BaseUserAdmin):
         )}),
     )
     add_fieldsets = (
-        (
-            None,
-            {
-                'classes': ('wide',),
-                'fields': ('email', 'handle', 'password1', 'password2')
-            }
-        ),
+        (None, {
+            'classes': (
+                'wide',
+            ),
+            'fields': (
+                'email',
+                'handle',
+                'password1',
+                'password2',
+            ),
+        }),
     )
 
-    list_display = ('email', 'handle', 'is_staff', 'last_login')
-    list_filter = ('is_staff', 'is_superuser', 'is_active', 'groups')
-    search_fields = ('email', 'handle')
-    ordering = ('email',)
-    filter_horizontal = ('groups', 'user_permissions',)
+    list_display = (
+        'email',
+        'handle',
+        'is_staff',
+        'last_login',
+    )
+    list_filter = (
+        'is_staff',
+        'is_superuser',
+        'is_active',
+        'groups',
+    )
+    search_fields = (
+        'email',
+        'handle',
+    )
+    ordering = (
+        'email',
+    )
+    filter_horizontal = (
+        'groups',
+        'user_permissions',
+    )
+    readonly_fields = (
+    )
 
 
 admin.site.register(User, UserAdmin)

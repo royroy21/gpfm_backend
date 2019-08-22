@@ -67,6 +67,9 @@ class User(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
             'unique': _("User with that handle already exists."),
         },
     )
+    avatar = models.ImageField(upload_to="avatars", blank=True, null=True)
+    bio = models.TextField(default="", blank=True)
+
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)

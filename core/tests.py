@@ -11,9 +11,10 @@ class TestMigrations(TestCase):
 
         for local_app in settings.LOCAL_APPS:
             migrations_directory = "{}/migrations".format(local_app)
-            for migration_file in listdir(migrations_directory):
-                if "_auto_" in migration_file:
-                    migrations_not_named.append("{}/{}".format(
-                        migrations_directory, migration_file))
+            migrations_not_named.extend([
+                "{}/{}".format(migrations_directory, migration_file)
+                for migration_file in listdir(migrations_directory)
+                if "_auto_" in migration_file
+            ])
 
         self.assertEqual(migrations_not_named, [])

@@ -16,6 +16,8 @@ class CurrentUserSerializer(DjoserUserSerializer):
         model = User
         fields = tuple(User.REQUIRED_FIELDS) + (
             settings.LOGIN_FIELD,
+            "avatar",
+            "bio",
             "handle",
             "id",
         )
