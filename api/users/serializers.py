@@ -4,6 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 from djoser.serializers import UserSerializer as DjoserUserSerializer
 from djoser.serializers import UserCreateSerializer as \
     DjoserUserCreateSerializer
+from rest_framework import serializers
 from rest_framework.serializers import CharField
 
 
@@ -11,6 +12,11 @@ User = get_user_model()
 
 
 class CurrentUserSerializer(DjoserUserSerializer):
+    avatar = serializers.ImageField(
+        allow_empty_file=True,
+        allow_null=True,
+        required=False,
+    )
 
     class Meta:
         model = User
