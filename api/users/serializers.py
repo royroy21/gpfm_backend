@@ -24,6 +24,7 @@ class CurrentUserSerializer(DjoserUserSerializer):
             settings.LOGIN_FIELD,
             "avatar",
             "bio",
+            "dob",
             "handle",
             "id",
         )

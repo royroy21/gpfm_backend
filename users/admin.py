@@ -10,6 +10,7 @@ class UserAdmin(BaseUserAdmin):
             'email',
             'handle',
             'bio',
+            'dob',
             'avatar',
             'password',
             'last_login',
@@ -55,10 +56,10 @@ class UserAdmin(BaseUserAdmin):
     ordering = (
         'email',
     )
-    filter_horizontal = (
-        'groups',
-        'user_permissions',
-    )
+    # filter_horizontal = (
+    #     'groups',
+    #     'user_permissions',
+    # )
     readonly_fields = (
     )
 
