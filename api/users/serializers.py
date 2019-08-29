@@ -27,7 +27,10 @@ class CurrentUserSerializer(DjoserUserSerializer):
             "handle",
             "id",
         )
-        read_only_fields = (settings.LOGIN_FIELD,)
+        read_only_fields = (
+            settings.LOGIN_FIELD,
+            "id",
+        )
 
 
 class CreatePasswordRetypeSerializer(DjoserUserCreateSerializer):
