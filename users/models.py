@@ -70,6 +70,7 @@ class User(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
     avatar = models.ImageField(upload_to="avatars", blank=True, null=True)
     bio = models.TextField(default="", blank=True)
     dob = models.DateField(blank=True, null=True)
+    genres = models.ManyToManyField("genres.Genre", related_name="users")
 
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)

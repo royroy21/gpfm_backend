@@ -11,6 +11,7 @@ class UserAdmin(BaseUserAdmin):
             'handle',
             'bio',
             'dob',
+            'genres',
             'avatar',
             'password',
             'last_login',

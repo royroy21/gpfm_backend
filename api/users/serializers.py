@@ -7,6 +7,9 @@ from djoser.serializers import UserCreateSerializer as \
 from rest_framework import serializers
 from rest_framework.serializers import CharField
 
+from api.genres.serializers import GenreSerializer
+from genres.models import Genre
+
 
 User = get_user_model()
 
@@ -17,21 +20,48 @@ class CurrentUserSerializer(DjoserUserSerializer):
         allow_null=True,
         required=False,
     )
+    genres = GenreSerializer(many=True)
 
     class Meta:
         model = User
-        fields = tuple(User.REQUIRED_FIELDS) + (
-            settings.LOGIN_FIELD,
-            "avatar",
+        simple_update_fields = (
             "bio",
             "dob",
             "handle",
+        )
+        fields = tuple(User.REQUIRED_FIELDS) + simple_update_fields + (
+            settings.LOGIN_FIELD,
+            "avatar",
+            "genres",
             "id",
         )
         read_only_fields = (
             settings.LOGIN_FIELD,
             "id",
         )
+
+    def update(self, instance, validated_data):
+        self.update_genres(instance)
+
+        for field in self.Meta.simple_update_fields:
+            data = validated_data.get(field)
+            if data is not None:
+                setattr(instance, field, data)
+
+        # We want None value to delete avatar
+        if "avatar" in validated_data:
+            instance.avatar = validated_data.get("avatar")
+
+        instance.save()
+        return instance
+
+    def update_genres(self, instance):
+        genres = self.initial_data.get("genres", [])
+
+        for genreData in genres:
+            genre = Genre.objects.filter(**genreData).last()
+            if genre:
+                instance.genres.add(genre)
 
 
 class CreatePasswordRetypeSerializer(DjoserUserCreateSerializer):
