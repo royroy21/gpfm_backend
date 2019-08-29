@@ -19,10 +19,13 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
+from api.genres.api import ListGenres
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r"^auth/", include("djoser.urls.base")),
     url(r"^auth/", include("djoser.urls.authtoken")),
+    url(r"^genres/$", ListGenres.as_view(), name="list_genres")
 ]
 
 if settings.DEBUG:
