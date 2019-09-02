@@ -12,5 +12,5 @@ class ListGenres(APIView):
     serializer = GenreSerializer
 
     def get(self, request):
-        genres = self.serializer(Genre.objects.all(), many=True)
+        genres = self.serializer(Genre.objects.order_by("name"), many=True)
         return Response(genres.data)
