@@ -1,3 +1,5 @@
+import json
+
 from django.contrib.auth import get_user_model
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
@@ -55,10 +57,17 @@ class CurrentUserSerializer(DjoserUserSerializer):
         instance.save()
         return instance
 
+    # TODO - this is hacky (especially the json thing!)
+    # Find a better way!!
     def update_genres(self, instance):
-        genres = self.initial_data.get("genres", [])
+        genres = self.initial_data.get("genres")
 
-        for genreData in genres:
+        if not genres:
+            return
+
+        instance.genres.clear()
+
+        for genreData in json.loads(genres):
             genre = Genre.objects.filter(**genreData).last()
             if genre:
                 instance.genres.add(genre)
