@@ -26,15 +26,13 @@ class CurrentUserSerializer(DjoserUserSerializer):
 
     class Meta:
         model = User
-        simple_update_fields = (
-            "bio",
-            "dob",
-            "handle",
-        )
-        fields = tuple(User.REQUIRED_FIELDS) + simple_update_fields + (
+        fields = tuple(User.REQUIRED_FIELDS) + (
             settings.LOGIN_FIELD,
             "avatar",
+            "bio",
+            "dob",
             "genres",
+            "handle",
             "id",
         )
         read_only_fields = (
@@ -45,17 +43,11 @@ class CurrentUserSerializer(DjoserUserSerializer):
     def update(self, instance, validated_data):
         self.update_genres(instance)
 
-        for field in self.Meta.simple_update_fields:
-            data = validated_data.get(field)
-            if data is not None:
-                setattr(instance, field, data)
-
         # We want None value to delete avatar
         if "avatar" in validated_data:
-            instance.avatar = validated_data.get("avatar")
+            instance.avatar = validated_data.pop("avatar")
 
-        instance.save()
-        return instance
+        return super().update(instance, validated_data)
 
     # TODO - this is hacky (especially the json thing!)
     # Find a better way!!
