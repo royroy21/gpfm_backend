@@ -17,16 +17,7 @@ class TestCurrentUserSerializer(TestCase):
         genre_electronic = G(Genre, name="electronic")
         genres_indie = G(Genre, name="indie")
         data = {
-            "genres": [
-                {
-                    "id": genre_electronic.id,
-                    "name": genre_electronic.name,
-                },
-                {
-                    "id": genres_indie.id,
-                    "name": genres_indie.name,
-                },
-            ],
+            "genres": [genre_electronic.id, genres_indie.id],
         }
         serializer = \
             self.serializer(instance=self.user, data=data, partial=True)

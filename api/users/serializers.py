@@ -1,5 +1,3 @@
-import json
-
 from django.contrib.auth import get_user_model
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
@@ -8,10 +6,6 @@ from djoser.serializers import UserCreateSerializer as \
     DjoserUserCreateSerializer
 from rest_framework import serializers
 from rest_framework.serializers import CharField
-
-from api.genres.serializers import GenreSerializer
-from genres.models import Genre
-
 
 User = get_user_model()
 
@@ -22,7 +16,6 @@ class CurrentUserSerializer(DjoserUserSerializer):
         allow_null=True,
         required=False,
     )
-    genres = GenreSerializer(many=True)
 
     class Meta:
         model = User
@@ -39,30 +32,6 @@ class CurrentUserSerializer(DjoserUserSerializer):
             settings.LOGIN_FIELD,
             "id",
         )
-
-    def update(self, instance, validated_data):
-        self.update_genres(instance)
-
-        # We want None value to delete avatar
-        if "avatar" in validated_data:
-            instance.avatar = validated_data.pop("avatar")
-
-        return super().update(instance, validated_data)
-
-    # TODO - this is hacky (especially the json thing!)
-    # Find a better way!!
-    def update_genres(self, instance):
-        genres = self.initial_data.get("genres")
-
-        if not genres:
-            return
-
-        instance.genres.clear()
-
-        for genreData in json.loads(genres):
-            genre = Genre.objects.filter(**genreData).last()
-            if genre:
-                instance.genres.add(genre)
 
 
 class CreatePasswordRetypeSerializer(DjoserUserCreateSerializer):
