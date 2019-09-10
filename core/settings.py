@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 LOCAL_APPS = [
     'genres',
+    'locations',
     'users',
 ]
 

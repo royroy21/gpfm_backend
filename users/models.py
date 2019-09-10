@@ -72,6 +72,14 @@ class User(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
     dob = models.DateField(blank=True, null=True)
     genres = models.ManyToManyField("genres.Genre", related_name="users")
 
+    location = models.ForeignKey(
+        "locations.Location",
+        on_delete=models.SET_NULL,
+        related_name="users",
+        blank=True,
+        null=True,
+    )
+
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
