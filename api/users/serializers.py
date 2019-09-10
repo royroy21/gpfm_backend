@@ -60,4 +60,3 @@ class CreatePasswordRetypeSerializer(DjoserUserCreateSerializer):
         if attrs['password'] != re_password:
             self.fail('password_mismatch')
         return attrs
-
