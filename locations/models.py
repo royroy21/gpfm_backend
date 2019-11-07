@@ -1,4 +1,4 @@
-from django.contrib.gis.geos import Point
+from django.contrib.gis.db import models as geo_models
 from django.db import models
 
 from core.models import DateCreatedUpdatedMixin
@@ -12,8 +12,8 @@ class Country(DateCreatedUpdatedMixin):
 
 
 class Location(DateCreatedUpdatedMixin):
-    name = models.CharField(max_length=254, unique=True)
-    geometry = Point()
+    name = models.CharField(max_length=254)
+    geometry = geo_models.PointField()
     country = models.ForeignKey(
         "locations.Country",
         on_delete=models.CASCADE,
