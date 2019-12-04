@@ -183,3 +183,6 @@ DJOSER = {
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = "/media/"
+
+# Geolocation
+SRID = 4326

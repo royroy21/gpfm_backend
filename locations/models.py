@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.gis.db import models as geo_models
 from django.contrib.gis.geos import GEOSGeometry
 from django.contrib.gis.measure import D
@@ -28,9 +29,10 @@ class Location(DateCreatedUpdatedMixin):
 
     @classmethod
     def get_nearest_locations(cls, miles, latitude, longitude):
-        # TODO - investigate what is srid
-        point = \
-            GEOSGeometry('POINT({} {})'.format(longitude, latitude), srid=4326)
+        point = GEOSGeometry(
+            'POINT({} {})'.format(longitude, latitude),
+            srid=settings.SRID,
+        )
         return Location.objects.filter(
             geometry__distance_lte=(point, D(mi=miles)))
 
