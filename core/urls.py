@@ -20,12 +20,16 @@ from django.contrib import admin
 from django.urls import path, include
 
 from api.genres.api import ListGenres
+from api.routes import api_router
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r"^auth/", include("djoser.urls.base")),
     url(r"^auth/", include("djoser.urls.authtoken")),
-    url(r"^api/genres/$", ListGenres.as_view(), name="list_genres")
+
+    # TODO - genres should really use search viewset
+    # url(r"^api/genres/$", ListGenres.as_view(), name="list_genres"),
+    url("^api/", include(api_router.urls)),
 ]
 
 if settings.DEBUG:

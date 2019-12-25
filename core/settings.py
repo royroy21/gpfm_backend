@@ -36,6 +36,16 @@ LOCAL_APPS = [
     'users',
 ]
 
+THIRD_PARTY_APPS = [
+    'corsheaders',
+    'django_elasticsearch_dsl',
+    'django_elasticsearch_dsl_drf',
+    'django_extensions',
+    'djoser',
+    'rest_framework',
+    'rest_framework.authtoken',
+]
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -43,12 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_extensions',
-    'rest_framework.authtoken',
-    'rest_framework',
-    'djoser',
-    'corsheaders',
-] + LOCAL_APPS
+] + LOCAL_APPS + THIRD_PARTY_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -131,7 +136,7 @@ LOGGING = {
     'loggers': {
         'django': {
             'handlers': ['console'],
-            'level': 'ERROR',
+            'level': 'INFO',
             'propagate': True,
         },
     },
@@ -186,3 +191,9 @@ MEDIA_URL = "/media/"
 
 # Geolocation
 SRID = 4326
+
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': 'elasticsearch:9200'
+    },
+}
