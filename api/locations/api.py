@@ -8,7 +8,7 @@ from locations.documents import LocationDocument
 from api.locations.serializers import LocationDocumentSerializer
 
 
-class LocationViewSet(DocumentViewSet):
+class LocationSearchViewSet(DocumentViewSet):
     document = LocationDocument
     serializer_class = LocationDocumentSerializer
     pagination_class = CustomPageNumberPagination
