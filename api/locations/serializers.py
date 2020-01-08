@@ -9,4 +9,5 @@ class LocationDocumentSerializer(DocumentSerializer):
         fields = (
             'id',
             'name',
+            'description',
         )
