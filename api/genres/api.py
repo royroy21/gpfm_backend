@@ -1,16 +1,11 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import authentication, permissions
+from rest_framework import authentication, permissions, viewsets
 
 from api.genres.serializers import GenreSerializer
-from genres.models import Genre
+from genres import models
 
 
-class ListGenres(APIView):
+class GenreViewSet(viewsets.ModelViewSet):
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
-    serializer = GenreSerializer
-
-    def get(self, request):
-        genres = self.serializer(Genre.objects.order_by("name"), many=True)
-        return Response(genres.data)
+    serializer_class = GenreSerializer
+    queryset = models.Genre.objects.order_by("-name")
