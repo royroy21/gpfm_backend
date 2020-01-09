@@ -1,5 +1,9 @@
+from django_elasticsearch_dsl_drf.constants import (
+    LOOKUP_FILTER_GEO_DISTANCE,
+)
 from django_elasticsearch_dsl_drf.filter_backends import (
     CompoundSearchFilterBackend,
+    GeoSpatialFilteringFilterBackend,
 )
 from django_elasticsearch_dsl_drf.viewsets import DocumentViewSet
 
@@ -16,7 +20,16 @@ class LocationSearchViewSet(DocumentViewSet):
 
     filter_backends = [
         CompoundSearchFilterBackend,
+        GeoSpatialFilteringFilterBackend,
     ]
+
+    geo_spatial_filter_fields = {
+        'location': {
+            'lookups': [
+                LOOKUP_FILTER_GEO_DISTANCE,
+            ],
+        },
+    }
 
     search_fields = (
         'name',

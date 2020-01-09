@@ -17,6 +17,7 @@ class LocationDocument(Document):
             'raw': fields.StringField(analyzer='keyword'),
         }
     )
+    location = fields.GeoPointField(attr='location_field_indexing')
 
     class Django:
         model = models.Location

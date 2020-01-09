@@ -27,6 +27,14 @@ class Location(DateCreatedUpdatedMixin):
     def __str__(self):
         return "{} ({})".format(self.name, self.country.code)
 
+    @property
+    def location_field_indexing(self):
+        longitude, latitude = self.geometry.coords
+        return {
+            'lat': latitude,
+            'lon': longitude,
+        }
+
     @classmethod
     def get_nearest_locations(cls, miles, latitude, longitude):
         point = GEOSGeometry(
