@@ -192,17 +192,29 @@ CACHES = {
 
 LOGGING = {
     'version': 1,
-    'disable_existing_loggers': False,
+    'disable_existing_loggers': True,
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler',
         },
     },
     'loggers': {
-        'django': {
+        '': {
+            'level': 'WARNING',
+            'handlers': ['console'],
+        },
+        # TODO - we should be able to set this at the project level
+        'locations': {
             'handlers': ['console'],
             'level': 'DEBUG',
-            'propagate': True,
+            'propagate': False,
         },
     },
 }
+
+# Open Cage
+OPEN_CAGE_URL = "https://api.opencagedata.com/geocode/v1/json"
+OPEN_CAGE_TOKEN = "7e9f8dfcb588432eb2663dde09aca441"
+OPEN_CAGE_RATE_LIMIT_TRIES = 10
+OPEN_CAGE_RATE_LIMIT_WAIT = 1  # seconds
+OPEN_CAGE_CACHE_TIME_TO_LIVE = 60 * 60 * 12 * 7  # one week
