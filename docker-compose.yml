@@ -23,6 +23,13 @@ services:
       memlock:
         soft: -1
         hard: -1
+  redis:
+    image: redis:5.0.7
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+    ports:
+      - "9379:6379"
   web:
     build: .
     # TODO - Must fix. Having to disable reload to use ipdb.
@@ -38,9 +45,11 @@ services:
     depends_on:
       - db
       - elasticsearch
+      - redis
     stdin_open: true
     tty: true
 
 volumes:
   data-volume:
   elasticsearch-volume:
+  redis_data:
