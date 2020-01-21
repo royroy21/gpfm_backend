@@ -4,7 +4,7 @@ from api.genres.serializers import GenreSerializer
 from genres import models
 
 
-class GenreViewSet(viewsets.ModelViewSet):
+class GenresViewSet(viewsets.ModelViewSet):
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = GenreSerializer
