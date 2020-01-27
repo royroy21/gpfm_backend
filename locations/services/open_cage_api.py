@@ -69,6 +69,7 @@ class ForwardGeocodingOpenCageAPI(BaseOpenCageAPI):
 
     def resolve_query(self, query, country):
         params = {
+            "abbrv": 1,
             "countrycode": country,
             "no_dedupe": 1,
             "no_annotations": 1,
@@ -94,6 +95,7 @@ class ReverseGeocodingOpenCageAPI(BaseOpenCageAPI):
 
     def resolve_query(self, latitude, longitude):
         params = {
+            "abbrv": 1,
             "no_annotations": 1,
             "q": f"{latitude}+{longitude}",
         }

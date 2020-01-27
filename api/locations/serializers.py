@@ -17,6 +17,7 @@ class LocationDocumentSerializer(DocumentSerializer):
 
 class BaseGeocodingSerializer(serializers.Serializer):
 
+    parser = services.OpenCageParser
     service = None
 
     def resolve_query(self, *args, **kwargs):
@@ -38,7 +39,10 @@ class ForwardGeocodingSerializer(BaseGeocodingSerializer):
             raise ValidationError("Missing parameters. "
                                   "'q' and 'country' required")
 
-        return self.geocoding_service.resolve_query(query, country)
+        response = self.geocoding_service.resolve_query(query, country)
+        if not response:
+            return []
+        return self.parser().parse_results(response, query)
 
 
 class ReverseGeocodingSerializer(BaseGeocodingSerializer):
@@ -50,4 +54,7 @@ class ReverseGeocodingSerializer(BaseGeocodingSerializer):
             raise ValidationError("Missing parameters. 'latitude'"
                                   " and 'longitude' required")
 
-        return self.geocoding_service.resolve_query(latitude, longitude)
+        response = self.geocoding_service.resolve_query(latitude, longitude)
+        if not response:
+            return []
+        return self.parser().parse_results(response)
