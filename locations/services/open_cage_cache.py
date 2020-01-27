@@ -2,8 +2,6 @@ from django.core.cache import cache
 from django.conf import settings
 
 
-# TODO - cached entries should be parsed results not raw api data. This will improve performance
-# TODO - perhaps cache at the view level?
 class BaseOpenCageCache:
 
     BASE_KEY = "open_cage"

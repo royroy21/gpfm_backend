@@ -1,3 +1,5 @@
 from .open_cage_api import ForwardGeocodingOpenCageAPI
 from .open_cage_api import ReverseGeocodingOpenCageAPI
+from .open_cage_cache import ForwardGeocodingCache
+from .open_cage_cache import ReverseGeocodingCache
 from .open_cage_parser import OpenCageParser

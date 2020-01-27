@@ -3,14 +3,10 @@ import logging
 import requests
 from django.conf import settings
 
-from locations.services import open_cage_cache
-
 logger = logging.getLogger(__name__)
 
 
 class BaseOpenCageAPI:
-
-    cache = None
 
     RATE_LIMIT_ERROR_CODE = 429
     URL = settings.OPEN_CAGE_URL
@@ -65,8 +61,6 @@ class ForwardGeocodingOpenCageAPI(BaseOpenCageAPI):
 
     RESULTS_LIMIT = 50
 
-    cache = open_cage_cache.ForwardGeocodingCache()
-
     def resolve_query(self, query, country):
         params = {
             "abbrv": 1,
@@ -76,22 +70,11 @@ class ForwardGeocodingOpenCageAPI(BaseOpenCageAPI):
             "limit": self.RESULTS_LIMIT,
             "q": query,
         }
-
-        cached_response = self.cache.get(query, country)
-        if cached_response:
-            logger.debug(
-                "returning %s %s response from cache", self.URL, params)
-            return cached_response
-
         response = self.get_location_data(self.URL, params)
-        logger.debug("returning %s %s response from api", self.URL, params)
-        self.cache.set(query, country, response)
         return response
 
 
 class ReverseGeocodingOpenCageAPI(BaseOpenCageAPI):
-
-    cache = open_cage_cache.ReverseGeocodingCache()
 
     def resolve_query(self, latitude, longitude):
         params = {
@@ -99,14 +82,5 @@ class ReverseGeocodingOpenCageAPI(BaseOpenCageAPI):
             "no_annotations": 1,
             "q": f"{latitude}+{longitude}",
         }
-
-        cached_response = self.cache.get(latitude, longitude)
-        if cached_response:
-            logger.debug(
-                "returning %s %s response from cache", self.URL, params)
-            return cached_response
-
         response = self.get_location_data(self.URL, params)
-        logger.debug("returning %s %s response from api", self.URL, params)
-        self.cache.set(latitude, longitude, response)
         return response
