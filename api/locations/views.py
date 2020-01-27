@@ -54,6 +54,6 @@ class LocationsGeocodingViewSet(viewsets.ViewSet):
     def reverse_geocoding(self, request):
         latitude = request.query_params.dict().get("latitude")
         longitude = self.request.query_params.dict().get("longitude")
-        results = self.forward_geocoding_serializer()\
+        results = self.reverse_geocoding_serializer()\
             .resolve_query(latitude, longitude)
         return Response(results)
