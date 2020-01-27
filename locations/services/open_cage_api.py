@@ -82,5 +82,7 @@ class ReverseGeocodingOpenCageAPI(BaseOpenCageAPI):
             "no_annotations": 1,
             "q": f"{latitude}+{longitude}",
         }
+        # TODO - q params gets encoded incorrectly here so no results are returned.
+        # See: https://stackoverflow.com/questions/23496750/how-to-prevent-python-requests-from-percent-encoding-my-urls/23497912
         response = self.get_location_data(self.URL, params)
         return response
