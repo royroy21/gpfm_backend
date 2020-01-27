@@ -50,10 +50,11 @@ class LocationsGeocodingViewSet(viewsets.ViewSet):
             .resolve_query(query, country)
         return Response(results)
 
-    @action(methods=['get'], detail=False, url_path='reverse-geocoding')
-    def reverse_geocoding(self, request):
-        latitude = request.query_params.dict().get("latitude")
-        longitude = self.request.query_params.dict().get("longitude")
-        results = self.reverse_geocoding_serializer()\
-            .resolve_query(latitude, longitude)
-        return Response(results)
+    # TODO - consider removing this. I don't think it's needed
+    # @action(methods=['get'], detail=False, url_path='reverse-geocoding')
+    # def reverse_geocoding(self, request):
+    #     latitude = request.query_params.dict().get("latitude")
+    #     longitude = self.request.query_params.dict().get("longitude")
+    #     results = self.reverse_geocoding_serializer()\
+    #         .resolve_query(latitude, longitude)
+    #     return Response(results)
