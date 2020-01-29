@@ -61,8 +61,9 @@ class ForwardGeocodingSerializer(BaseGeocodingSerializer):
 
         logger.debug("Returning forward geocoding response from api. "
                      "Values: %s %s", query, country)
-        cache.set(query, country, response)
-        return self.parser().parse_results(response, query)
+        parse_results = self.parser().parse_results(response, query)
+        cache.set(query, country, parse_results)
+        return parse_results
 
 
 class ReverseGeocodingSerializer(BaseGeocodingSerializer):
@@ -91,5 +92,6 @@ class ReverseGeocodingSerializer(BaseGeocodingSerializer):
 
         logger.debug("Returning reverse geocoding response from api. "
                      "Values: %s %s", latitude, longitude)
-        cache.set(latitude, longitude, response)
-        return self.parser().parse_results(response)
+        parse_results = self.parser().parse_results(response)
+        cache.set(latitude, longitude, parse_results)
+        return parse_results
