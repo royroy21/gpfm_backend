@@ -35,14 +35,13 @@ class LocationsSearchViewSet(DocumentViewSet):
 
 class LocationsGeocodingViewSet(viewsets.ViewSet):
 
-    # TODO - set auth
-    # authentication_classes = [authentication.TokenAuthentication]
-    # permission_classes = [permissions.IsAuthenticated]
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
 
     forward_geocoding_serializer = serializers.ForwardGeocodingSerializer
     reverse_geocoding_serializer = serializers.ReverseGeocodingSerializer
 
-    @action(methods=['get'], detail=False, url_path='forward-geocoding')
+    @action(methods=['get'], detail=False, url_path='forward-query')
     def forward_geocoding(self, request):
         country = request.query_params.dict().get("country")
         query = self.request.query_params.dict().get("q")
@@ -51,7 +50,7 @@ class LocationsGeocodingViewSet(viewsets.ViewSet):
         return Response(results)
 
     # TODO - consider removing this. I don't think it's needed
-    # @action(methods=['get'], detail=False, url_path='reverse-geocoding')
+    # @action(methods=['get'], detail=False, url_path='reverse-query')
     # def reverse_geocoding(self, request):
     #     latitude = request.query_params.dict().get("latitude")
     #     longitude = self.request.query_params.dict().get("longitude")
