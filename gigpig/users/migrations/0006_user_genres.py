@@ -14,6 +14,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='user',
             name='genres',
-            field=models.ManyToManyField(related_name='users', to='gigpig.genres.Genre'),
+            field=models.ManyToManyField(related_name='users', to='genres.Genre'),
         ),
     ]

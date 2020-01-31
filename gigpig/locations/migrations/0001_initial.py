@@ -31,7 +31,7 @@ class Migration(migrations.Migration):
                 ('date_created', models.DateTimeField(auto_now_add=True)),
                 ('date_updated', models.DateTimeField(auto_now=True)),
                 ('name', models.CharField(max_length=254, unique=True)),
-                ('country', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='locations', to='gigpig.locations.Country')),
+                ('country', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='locations', to='Country')),
             ],
             options={
                 'abstract': False,
