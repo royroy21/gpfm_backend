@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ('genres', '0002_make_genre_name_unique'),
-        ('locations', '0005_auto_20200205_1919'),
+        ('locations', '0005_location_extra_fields'),
     ]
 
     operations = [

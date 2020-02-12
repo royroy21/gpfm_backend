@@ -3,13 +3,13 @@ from django.test import TestCase
 from django.urls import reverse
 from rest_framework.test import APIClient
 
-from gigpig.genres import Genre
-from gigpig.users import User
+from gigpig.genres.models import Genre
+from gigpig.users.models import User
 
 
 class TestListGenres(TestCase):
 
-    endpoint = reverse("list_genres")
+    endpoint = reverse("genre-list")
 
     def setUp(self):
         email = "roy@example.com"
