@@ -61,7 +61,7 @@ class Location(DateCreatedUpdatedMixin):
         choices=TYPES,
         default=TYPE_UNKNOWN,
     )
-    components = JSONField(default={})
+    components = JSONField(default=dict)
 
     def __str__(self):
         return "{} ({})".format(self.name, self.country.code)
