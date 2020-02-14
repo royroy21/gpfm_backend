@@ -9,10 +9,11 @@ from gigpig.core.models import DateCreatedUpdatedMixin
 
 
 class Country(DateCreatedUpdatedMixin):
+    name = models.CharField(max_length=254, unique=True)
     code = models.CharField(max_length=254, unique=True)
 
     def __str__(self):
-        return self.code
+        return f"{self.name} ({self.code})"
 
 
 class Location(DateCreatedUpdatedMixin):
