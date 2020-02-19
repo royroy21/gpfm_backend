@@ -12,7 +12,7 @@ class Gig(DateCreatedUpdatedMixin):
     genres = models.ManyToManyField("genres.Genre")
     image = models.ImageField(upload_to="images", blank=True, null=True)
     start_date = models.DateTimeField()
-    end_date = models.DateTimeField(blank=True, null=True)
+    end_date = models.DateTimeField(default=None, blank=True, null=True)
     user = models.ForeignKey("users.User", on_delete=models.CASCADE)
 
     def __str__(self):
