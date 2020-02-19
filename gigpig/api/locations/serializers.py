@@ -4,9 +4,26 @@ from django_elasticsearch_dsl_drf.serializers import DocumentSerializer
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
-from gigpig.locations import documents, services
+from gigpig.api.fields import GeometryFieldWithDefaultZValue
+from gigpig.locations import documents, models, services
 
 logger = logging.getLogger(__name__)
+
+
+class LocationSerializer(serializers.ModelSerializer):
+
+    geometry = GeometryFieldWithDefaultZValue()
+
+    class Meta:
+        model = models.Location
+        fields = (
+            "country",
+            "description",
+            "geometry",
+            "id",
+            "name",
+            "type",
+        )
 
 
 class LocationDocumentSerializer(DocumentSerializer):
