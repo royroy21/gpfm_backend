@@ -4,7 +4,7 @@ from django_elasticsearch_dsl_drf.serializers import DocumentSerializer
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
-from gigpig.api.fields import GeometryFieldWithDefaultZValue
+from gigpig.api.fields import GeometryField
 from gigpig.locations import documents, models, services
 
 logger = logging.getLogger(__name__)
@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 class LocationSerializer(serializers.ModelSerializer):
 
-    geometry = GeometryFieldWithDefaultZValue()
+    geometry = GeometryField()
 
     class Meta:
         model = models.Location
