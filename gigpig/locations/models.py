@@ -17,7 +17,7 @@ class Country(DateCreatedUpdatedMixin):
 
 
 class Location(DateCreatedUpdatedMixin):
-    name = models.CharField(max_length=254)
+    name = models.CharField(max_length=254, unique=True)
     description = models.TextField(default="", blank=True)
 
     # TODO - check if these fields (see link) are better suited ...
