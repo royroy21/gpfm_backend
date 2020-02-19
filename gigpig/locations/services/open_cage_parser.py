@@ -6,6 +6,10 @@ from gigpig.locations import models
 logger = logging.getLogger(__name__)
 
 
+class OpenCageParserError(Exception):
+    pass
+
+
 # TODO - add tests? try reading: it gives back "Reading, Reading" :/
 class OpenCageParser:
 
@@ -42,6 +46,8 @@ class OpenCageParser:
         COMPONENT_FIELD_POSTCODE: "postcode",
     }
 
+    COUNTRY_CODE_KEY = "ISO_3166-1_alpha-2"
+
     def parse_results(self, response, query=None):
         names_added = []
         parsed_results = []
@@ -62,11 +68,17 @@ class OpenCageParser:
 
             names_added.append(name)
             parsed_results.append({
-                "bounds": result.get("bounds"),
-                "geometry": result["geometry"],
+                # TODO - implement bounds after geometry
+                # "bounds": result.get("bounds"),
+
+                "country": self.get_country_id(components),
+                "geometry": [
+                    result["geometry"]["lat"],
+                    result["geometry"]["lng"],
+                ],
                 "name": name,
                 "type": components_type,
-                "raw_components": components,
+                "components": components,
             })
 
         return parsed_results
@@ -118,3 +130,11 @@ class OpenCageParser:
             in self.FORMATTED_NAME_FIELDS
             if components.get(field)
         ])
+
+    def get_country_id(self, components):
+        country_code = components[self.COUNTRY_CODE_KEY]
+        country = \
+            models.Country.objects.filter(code=country_code.upper()).first()
+        if not country:
+            raise OpenCageParserError(f"Invalid country code: {country_code}")
+        return country.id
