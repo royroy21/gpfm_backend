@@ -4,8 +4,8 @@ from gigpig.core.models import DateCreatedUpdatedMixin
 
 
 class Gig(DateCreatedUpdatedMixin):
-    title = models.CharField(max_length=254, unique=True)
-    venue = models.CharField(max_length=254, unique=True)
+    title = models.CharField(max_length=254)
+    venue = models.CharField(max_length=254)
     location = \
         models.ForeignKey("locations.Location", on_delete=models.CASCADE)
     description = models.TextField(default="", blank=True)
