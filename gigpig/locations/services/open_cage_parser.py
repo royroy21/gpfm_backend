@@ -1,36 +1,22 @@
 import logging
 
+from gigpig.locations import models
+
 
 logger = logging.getLogger(__name__)
+
+
+class OpenCageParserError(Exception):
+    pass
 
 
 # TODO - add tests? try reading: it gives back "Reading, Reading" :/
 class OpenCageParser:
 
-    TYPE_VILLAGE = "village"
-    TYPE_NEIGHBOURHOOD = "neighbourhood"
-    TYPE_CITY = "city"
-    TYPE_COUNTY = "county"
-    TYPE_POSTCODE = "postcode"
-    TYPE_TERMINATED_POSTCODE = "terminated_postcode"
-    TYPE_STATE_DISTRICT = "state_district"
-    TYPE_STATE = "state"
-    TYPE_REGION = "region"
-    TYPE_ISLAND = "island"
-    TYPE_COUNTRY = "country"
-
     VALID_TYPES = [
-        TYPE_VILLAGE,
-        TYPE_NEIGHBOURHOOD,
-        TYPE_CITY,
-        TYPE_COUNTY,
-        TYPE_POSTCODE,
-        TYPE_TERMINATED_POSTCODE,
-        TYPE_STATE_DISTRICT,
-        TYPE_STATE,
-        TYPE_REGION,
-        TYPE_ISLAND,
-        TYPE_COUNTRY,
+        location_type
+        for location_type, _
+        in models.Location.TYPES
     ]
 
     COMPONENT_FIELD_VILLAGE = "village"
@@ -60,6 +46,8 @@ class OpenCageParser:
         COMPONENT_FIELD_POSTCODE: "postcode",
     }
 
+    COUNTRY_CODE_KEY = "ISO_3166-1_alpha-2"
+
     def parse_results(self, response, query=None):
         names_added = []
         parsed_results = []
@@ -80,11 +68,17 @@ class OpenCageParser:
 
             names_added.append(name)
             parsed_results.append({
-                "bounds": result.get("bounds"),
-                "geometry": result["geometry"],
+                # TODO - implement bounds after geometry
+                # "bounds": result.get("bounds"),
+
+                "country": self.get_country_id(components),
+                "geometry": [
+                    result["geometry"]["lat"],
+                    result["geometry"]["lng"],
+                ],
                 "name": name,
                 "type": components_type,
-                "raw_components": components,
+                "components": components,
             })
 
         return parsed_results
@@ -136,3 +130,11 @@ class OpenCageParser:
             in self.FORMATTED_NAME_FIELDS
             if components.get(field)
         ])
+
+    def get_country_id(self, components):
+        country_code = components[self.COUNTRY_CODE_KEY]
+        country = \
+            models.Country.objects.filter(code=country_code.upper()).first()
+        if not country:
+            raise OpenCageParserError(f"Invalid country code: {country_code}")
+        return country.id

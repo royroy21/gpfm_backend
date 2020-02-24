@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 LOCAL_APPS = [
+    'gigpig.gigs',
     'gigpig.genres',
     'gigpig.locations',
     'gigpig.users',

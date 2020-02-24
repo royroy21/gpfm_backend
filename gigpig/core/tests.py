@@ -10,7 +10,8 @@ class TestMigrations(TestCase):
         migrations_not_named = []
 
         for local_app in settings.LOCAL_APPS:
-            migrations_directory = "{}/migrations".format(local_app)
+            local_app_path = "/".join(local_app.split("."))
+            migrations_directory = "{}/migrations".format(local_app_path)
             migrations_not_named.extend([
                 "{}/{}".format(migrations_directory, migration_file)
                 for migration_file in listdir(migrations_directory)

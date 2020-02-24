@@ -10,6 +10,14 @@ from gigpig.api.locations import serializers
 from gigpig.api.pagination import CustomPageNumberPagination
 from gigpig.locations.documents import LocationDocument
 from gigpig.api.locations.serializers import LocationDocumentSerializer
+from gigpig.locations import models
+
+
+class LocationViewSet(viewsets.ModelViewSet):
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = serializers.LocationSerializer
+    queryset = models.Location.objects.order_by("-title")
 
 
 # TODO - requires auth
