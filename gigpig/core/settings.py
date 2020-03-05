@@ -1,3 +1,4 @@
+# test
 """
 Django settings for core project.
 
