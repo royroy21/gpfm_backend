@@ -10,6 +10,23 @@ from gigpig.locations import documents, models, services
 logger = logging.getLogger(__name__)
 
 
+class CountrySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Country
+        fields = (
+            "code",
+            "id",
+            "name",
+        )
+
+    def create(self, validated_data):
+        raise ValidationError("Cannot create")
+
+    def update(self, instance, validated_data):
+        raise ValidationError("Cannot update")
+
+
 class LocationSerializer(serializers.ModelSerializer):
 
     name = fields.CharField()

@@ -13,6 +13,13 @@ from gigpig.api.locations.serializers import LocationDocumentSerializer
 from gigpig.locations import models
 
 
+class CountryViewSet(viewsets.ModelViewSet):
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = serializers.CountrySerializer
+    queryset = models.Country.objects.order_by("name")
+
+
 class LocationViewSet(viewsets.ModelViewSet):
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
