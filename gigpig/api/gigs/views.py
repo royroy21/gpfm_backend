@@ -16,4 +16,4 @@ class GigViewSet(viewsets.ModelViewSet):
             user = self.request.user
             return self.queryset.filter(user=user)
 
-        return models.Gig.objects.none()
+        return super().get_queryset()
